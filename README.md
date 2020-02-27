@@ -1,10 +1,6 @@
 # AI-Insects-Challenge
 [AI识虫练习赛](https://aistudio.baidu.com/aistudio/competition/detail/24)第二名代码分享
 
-[TOC]
-
-
-
 ## 简介
 
 本赛题是一个标准的目标检测任务，主要对纯色器皿中的七种虫子的位置和类别进行检测。本解决方案主要包含了两个模块，分别是YoloV3的目标检测模块，以及后置的SENet分类矫正模块。两个模块直接串联，先通过YoloV3得出检测框和分类结果，然后将检测框裁剪出来使用分类网络进一步矫正分类结果，最后通过一个改进的NMS方案得到最终结果。
@@ -182,7 +178,6 @@ SENet预训练：[ImageNet预训练参数](https://paddle-imagenet-models-name.b
   ```
 
   
-
 
 
 ## 结果
