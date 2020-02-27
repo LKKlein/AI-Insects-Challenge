@@ -32,8 +32,8 @@ def train_cls(args):
             train_acc = fluid.layers.accuracy(input=train_pred, label=train_label, k=1)
 
             opt = fluid.optimizer.AdamOptimizer(
-                learning_rate=fluid.layers.cosine_decay(0.01, step_each_epoch=200, epochs=300),
-                regularization=fluid.regularizer.L2DecayRegularizer(regularization_coeff=0.001)
+                learning_rate=fluid.layers.cosine_decay(args["lr"], step_each_epoch=200, epochs=300),
+                regularization=fluid.regularizer.L2DecayRegularizer(regularization_coeff=args["l2_decay"])
             )
             opt.minimize(avg_train_loss)
 

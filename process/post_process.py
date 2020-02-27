@@ -29,6 +29,7 @@ def merge_lower_iou(image_name, bboxes, iou_method, iou_thresh=0.5):
             iou = iou_method(box_i[2:], box_j[2:])
             if iou > iou_thresh:
                 box_i[2:] = get_outer_box(box_i[2:], box_j[2:])
+                box_i[1] = max(box_i[1], box_j[1])
                 drop_index.append(index)
 
         total_index = [item for idx, item in enumerate(total_index) if idx not in drop_index]

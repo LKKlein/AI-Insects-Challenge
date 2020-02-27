@@ -30,23 +30,24 @@ def train_yolo(train_dir, args):
     with fluid.program_guard(train_prog, startup_prog):
         with fluid.unique_name.guard():
             backbone = ResNet(depth=50, freeze_at=4, norm_type="bn",
-                              freeze_norm=False, norm_decay=0.0, variant="d",
+                              freeze_norm=args["freeze_norm"], norm_decay=0.0, variant="d",
                               feature_maps=[3, 4, 5], dcn_v2_stages=[5])
             yolo_head = YOLOv3Head(num_classes=args["num_classes"], anchors=args["anchors"],
                                    anchor_masks=args["anchor_masks"], norm_decay=0,
-                                   freeze_block=[], freeze_route=[0],
+                                   freeze_block=args["freeze_block"], freeze_route=args["freeze_route"],
                                    drop_block=False, block_size=3, keep_prob=0.95,
-                                   ignore_thresh=args["ignore_thresh"],
+                                   ignore_thresh=args["ignore_thresh"], freeze_norm=args["freeze_norm"],
                                    label_smooth=args["use_label_smooth"])
-            model = YOLOv3(backbone, yolo_head, freeze_backbone=True)
+            model = YOLOv3(backbone, yolo_head, freeze_backbone=args["freeze_backbone"])
             feed_vars = train_feed.build_inputs(image_shape=[None, 3, None, None])
             train_fetches = model.train(feed_vars)
             loss = train_fetches["loss"]
 
             opt = fluid.optimizer.MomentumOptimizer(
-                learning_rate=fluid.layers.cosine_decay(0.0005, step_each_epoch=200, epochs=200),
-                momentum=0.9,
-                regularization=fluid.regularizer.L2DecayRegularizer(regularization_coeff=0.0008)
+                learning_rate=fluid.layers.cosine_decay(args["lr"],
+                    step_each_epoch=args["steps_per_epoch"], epochs=args["iters"] // args["steps_per_epoch"]),
+                momentum=args["momentum"],
+                regularization=fluid.regularizer.L2DecayRegularizer(regularization_coeff=args["l2_coffe"])
             )
             opt.minimize(loss)
 
@@ -65,7 +66,7 @@ def train_yolo(train_dir, args):
                                        nms_threshold=args["nms_thresh"],
                                        nms_keep_topk=args["keep_topk"],
                                        score_threshold=args["score_threshold"])
-                model = YOLOv3(backbone, yolo_head, freeze_backbone=True)
+                model = YOLOv3(backbone, yolo_head)
                 feed_vars = eval_feed.build_inputs(image_shape=[None, 3, 608, 608])
                 eval_fetches = model.eval(feed_vars)
         eval_prog = eval_prog.clone(True)
@@ -125,8 +126,8 @@ def train_yolo(train_dir, args):
 
 if __name__ == "__main__":
     args = {
-        "train_dir": "/world/data-c9/lvkun/self/data/insects/data",
-        "eval_dir": "/world/data-c9/lvkun/self/data/insects/test",
+        "train_dir": "data/insects/train",
+        "eval_dir": "data/insects/val",
         "anchors": [
             [19, 29], [28, 20], [25, 40],
             [31, 47], [36, 37], [41, 26],
@@ -140,7 +141,11 @@ if __name__ == "__main__":
         "image_shape": 608,
         "ignore_thresh": 0.7,
         "num_max_boxes": 50,
+        "lr": 0.0005,
+        "l2_coffe": 0.0008,
         "iters": 40000,
+        "steps_per_epoch": 170,
+        "momentum": 0.9,
         "save_iter": 50,
         "log_iter": 10,
         "batch_size": 12,
@@ -148,6 +153,10 @@ if __name__ == "__main__":
         "ignore_weights": ["yolo_output"],
         "pretrain_weights": "pretrain_weights/yolov3_resnet50vd_dcn",
         "save_dir": "models/",
+        "freeze_backbone": True,
+        "freeze_route": [0],
+        "freeze_block": [],
+        "freeze_norm": True,
         "map_type": "11point",
         "shuffle_images": True,
         "use_label_smooth": True,
