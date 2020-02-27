@@ -17,9 +17,6 @@ def process(results):
 
 
 def merge_lower_iou(image_name, bboxes, iou_method, iou_thresh=0.5):
-    if int(image_name) in [3078] and iou_method.__name__ == "box_area_iou_xyxy":
-        iou_thresh = 0.65
-
     total_index = list(range(len(bboxes)))
     total_boxes = []
     while len(total_index) > 0:
