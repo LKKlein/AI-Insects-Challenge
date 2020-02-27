@@ -75,6 +75,7 @@
 
 ### 关键环境
 
+- Python == 3.6.8  (python2 运行会报找不到目录的错)
 - paddlepaddle-gpu == 1.6.1
 - opencv-python == 3.2.0.8
 - numpy == 1.16.2
