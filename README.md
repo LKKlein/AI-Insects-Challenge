@@ -199,6 +199,6 @@ SENet预训练：[ImageNet预训练参数](https://paddle-imagenet-models-name.b
 
 ## AIStudio项目分享
 
-本项目在AIStudio中同样创建了分享，地址为 https://aistudio.baidu.com/aistudio/projectdetail/289616，  
+本项目在AIStudio中同样创建了分享，地址为 https://aistudio.baidu.com/aistudio/projectdetail/289616  
 该项目中包含运行所需的数据集，可通过提供的命令直接构建所需的文件和目录，
 欢迎各位同学Star和Fork
