@@ -7,7 +7,7 @@
 
 <img src="test_img/insects_result.png" style="zoom:60%" />
 
-注：本代码均使用paddlepaddle 1.6.0 的静态网络搭建
+注：本代码均使用paddlepaddle 1.6.1 的静态网络搭建
 
 ### 图像增广方案
 
@@ -84,7 +84,7 @@
 
 - AI识虫检测数据
 
-  这里没有为大家准备数据，熟悉的人可以直接在AIStudio中拷贝数据，以老师给我们的目录为例，直接运行以下命令
+  这里没有为大家准备数据，熟悉的人可以直接在AIStudio中拷贝数据。首先需要在项目中创建`data`目录，然后以老师给我们的数据为例，直接运行以下命令
 
   ```shell
   !unzip -d insects_detection/data/ insects.zip
@@ -94,8 +94,10 @@
 
 - 分类矫正网络训练数据
 
-  AI识虫数据解压完成后，直接运行命令即可直接生成分类网络的训练数据和验证数据
+  在`data`目录下分别创建 `insect_cls/train` 和 `insect_cls/val`的目录，
 
+  AI识虫数据解压完成后，直接运行命令即可直接生成分类网络的训练数据和验证数据
+  
   ```shell
   python classification/generate_cls_data.py
   ```
@@ -108,7 +110,7 @@ YoloV3预训练：[object365预训练参数](https://paddlemodels.bj.bcebos.com/
 
 SENet预训练：[ImageNet预训练参数](https://paddle-imagenet-models-name.bj.bcebos.com/SE_ResNet50_vd_pretrained.tar)
 
-将下载好的预训练参数解压到pretrain_weights下，分别形成 `pretrain_weights/yolov3_resnet50vd_dcn` 和 `pretrain_weights/se_resnet50_vd` 两个模型目录
+将下载好的预训练参数解压到`pretrain_weights`下，分别形成 `pretrain_weights/yolov3_resnet50vd_dcn` 和 `pretrain_weights/se_resnet50_vd` 两个模型目录
 
 ### 模型参数
 
@@ -192,5 +194,11 @@ SENet预训练：[ImageNet预训练参数](https://paddle-imagenet-models-name.b
 
   另外，经过对测试集结果的对比，发现上述测试集检测结果中，检测出了测试集中的三个漏标数据，分别是测试集图片`2547.jpeg`、`2558.jpeg`、`3073.jpeg`。所以，此次数据集有不少漏标错标的情况，如果能矫正这些错误，也许能直接让模型预测出更好的结果。
 
-<img src="test_img/error_label3.png" style="zoom:100%" />
+<img src="test_img/error_label2.png" style="zoom:100%" />
 
+
+## AIStudio项目分享
+
+本项目在AIStudio中同样创建了分享，地址为 https://aistudio.baidu.com/aistudio/projectdetail/289616，  
+该项目中包含运行所需的数据集，可通过提供的命令直接构建所需的文件和目录，
+欢迎各位同学Star和Fork

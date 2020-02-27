@@ -3,6 +3,9 @@ import time
 import numpy as np
 import paddle.fluid as fluid
 
+import sys
+sys.path.append("./")
+
 from classification.se_resnet_vd import SE_ResNet50_vd
 from reader.cls_reader import DataReader
 
@@ -84,7 +87,7 @@ if __name__ == "__main__":
         "batch_size": 64,
         "num_classes": 7,
         "log_iter": 20,
-        "weights": "/world/data-c40/lvkun/self/projects/cls_insect/se_resnet50_vd/pretrain2/SE_ResNet50_vd/0",
+        "weights": "models/se_resnet50_vd",
         "interpolation": None,
         "resize_short_size": 128,
         "image_mean": [0.8937, 0.9031, 0.8988],

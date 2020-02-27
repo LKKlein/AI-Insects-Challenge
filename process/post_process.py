@@ -1,4 +1,8 @@
 import numpy as np
+
+import sys
+sys.path.append("./")
+
 from utils.box_utils import box_iou_xyxy, get_outer_box, box_area_iou_xyxy
 
 

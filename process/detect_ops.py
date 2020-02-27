@@ -5,6 +5,9 @@ import time
 import numpy as np
 import paddle.fluid as fluid
 
+import sys
+sys.path.append("./")
+
 from utils.map_utils import DetectionMAP
 
 
@@ -103,7 +106,7 @@ def eval_results(results, num_classes, overlap_thresh=0.5, map_type="11point"):
         objects = res["objects"]
         start = 0
         images += len(im_ids)
-        for i in range(len(im_ids)):
+        for i in range(len(bboxes[1][0])):
             box_len = bboxes[1][0][i]
             cur = np.sum(bboxes[1][0][0:i + 1])
             boxes = bboxes[0][start:cur, :].copy()

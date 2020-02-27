@@ -1,10 +1,15 @@
+# coding:utf-8
+
 import os
 import json
 import numpy as np
 import xml.etree.ElementTree as ET
-from utils.map_utils import DetectionMAP
-
 import argparse
+
+import sys
+sys.path.append("./")
+
+from utils.map_utils import DetectionMAP
 
 
 def parse_args():

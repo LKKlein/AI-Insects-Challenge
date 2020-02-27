@@ -3,6 +3,9 @@ import time
 
 import paddle.fluid as fluid
 
+import sys
+sys.path.append("./")
+
 from detection.resnet import ResNet
 from detection.yolo_head import YOLOv3Head
 from detection.yolov3 import YOLOv3
@@ -141,8 +144,8 @@ if __name__ == "__main__":
         "image_shape": 608,
         "ignore_thresh": 0.7,
         "num_max_boxes": 50,
-        "lr": 0.0005,
-        "l2_coffe": 0.0008,
+        "lr": 0.0001,
+        "l2_coffe": 0.0005,
         "iters": 40000,
         "steps_per_epoch": 170,
         "momentum": 0.9,

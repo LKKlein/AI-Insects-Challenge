@@ -4,6 +4,9 @@ import math
 from PIL import Image, ImageEnhance
 import random
 
+import sys
+sys.path.append("./")
+
 from utils.box_utils import (multi_box_iou, box_crop, filter_and_process,
                              generate_sample_bbox, satisfy_sample_constraint, clip_bbox)
 

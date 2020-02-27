@@ -92,7 +92,7 @@ if __name__ == "__main__":
     TRAINDIR = "data/insects/train"
     train_records = get_annotations(cname2cid, TRAINDIR)
     generate_data(save_dir, train_records, "train")
-    
+
     VALIDDIR = "data/insects/val"
     val_records = get_annotations(cname2cid, VALIDDIR)
     generate_data(save_dir, val_records, "val")

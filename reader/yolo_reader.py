@@ -5,6 +5,9 @@ import copy
 import functools
 import paddle.fluid as fluid
 
+import sys
+sys.path.append("./")
+
 from reader.insects_reader import get_insect_names, get_annotations, get_test_images
 from process.image_ops import (DecodeImage, MixupImage, NormalizeBox, RandomDistort,
                                RandomRotateImage, RandomFlipImage, RandomCropImage,

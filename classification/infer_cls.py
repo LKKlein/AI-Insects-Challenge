@@ -6,6 +6,9 @@ import cv2
 import numpy as np
 import paddle.fluid as fluid
 
+import sys
+sys.path.append("./")
+
 from classification.se_resnet_vd import SE_ResNet50_vd
 from reader.cls_reader import DataReader
 

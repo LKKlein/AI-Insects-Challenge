@@ -4,6 +4,9 @@ import time
 import numpy as np
 import paddle.fluid as fluid
 
+import sys
+sys.path.append("./")
+
 from classification.se_resnet_vd import SE_ResNet50_vd
 from process.detect_ops import load_pretrained_params, save_params
 from reader.cls_reader import DataReader

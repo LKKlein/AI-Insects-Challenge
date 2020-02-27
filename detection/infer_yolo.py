@@ -3,6 +3,9 @@ import json
 import numpy as np
 import paddle.fluid as fluid
 
+import sys
+sys.path.append("./")
+
 from detection.resnet import ResNet
 from detection.yolo_head import YOLOv3Head
 from detection.yolov3 import YOLOv3

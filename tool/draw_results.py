@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.image import imread
 
+import sys
+sys.path.append("./")
+
 from reader.insects_reader import INSECT_NAMES
 
 
