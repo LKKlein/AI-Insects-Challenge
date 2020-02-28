@@ -3,7 +3,8 @@ import numpy as np
 import sys
 sys.path.append("./")
 
-from utils.box_utils import box_iou_xyxy, get_outer_box, box_area_iou_xyxy
+from utils.box_utils import get_outer_box, box_area_iou_xyxy
+from process.nms_ops import multiclass_softnms
 
 
 def process(results):
@@ -11,8 +12,15 @@ def process(results):
     for idx, result in enumerate(results):
         image_name = str(result[0])
         bboxes = np.array(result[1]).astype('float32')
-        total_boxes = merge_lower_iou(image_name, bboxes,
-                                      box_iou_xyxy, iou_thresh=0.45)
+        box = bboxes
+        bboxes_result = np.array([box[:, 2:]])
+        scores_result = np.zeros([1, len(box), 7])
+        scores_result[:, range(len(box)), box[:, 0].astype("int")] = box[:, 1]
+        scores_result = np.swapaxes(scores_result, 1, 2)
+        final_result = multiclass_softnms(bboxes_result, scores_result,
+                                          softnms_thres=0.45, softnms_sigma=0.2,
+                                          keep_top_k=12)
+        total_boxes = final_result[0]
         total_boxes = merge_lower_iou(image_name, total_boxes,
                                       box_area_iou_xyxy, iou_thresh=0.9)
         total_boxes = drop_lower_score(image_name, total_boxes, score_thresh=0.45)
